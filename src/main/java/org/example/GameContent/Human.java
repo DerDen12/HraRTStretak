@@ -4,7 +4,7 @@ public class Human extends Character {
 
     private int team;
 
-    public Human(int health, int damage, int rangeResistance, int meleeResistance) {
-        super(health, damage, rangeResistance, meleeResistance);
+    public Human(int health, int damage,int x, int y) {
+        super(health, damage, x, y);
     }
 }

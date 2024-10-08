@@ -1,8 +1,14 @@
 package org.example;
 
+import org.example.GameContent.Unit;
+
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 public class Game {
 
@@ -22,7 +28,27 @@ public class Game {
         graphic.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                List<Unit> units = logic.getUnits();
+                boolean clickedOnUnit = false;
 
+                for (Unit unit: units) {
+                    int x = unit.getPosition().x;
+                    int y = unit.getPosition().y;
+
+                    if (e.getX() >= x - 10 && e.getX() <= x + 40 && e.getY() >= y - 10 && e.getY() <= y + 40) {
+                       unit.setSelected(true);
+                       clickedOnUnit = true;
+                    } else {
+                        unit.setSelected(false);
+                    }
+                }
+
+
+                    if (!clickedOnUnit) {
+                        for (Unit unit: units) {
+                            unit.setSelected(false);
+                        }
+                    }
             }
 
             @Override
@@ -45,5 +71,13 @@ public class Game {
 
             }
         });
+
+        Timer timer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                graphic.render(logic);
+            }
+        });
+        timer.start();
     }
 }

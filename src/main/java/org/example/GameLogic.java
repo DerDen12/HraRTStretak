@@ -1,28 +1,27 @@
 package org.example;
 
 
-import org.example.GameContent.Alien;
-import org.example.GameContent.Human;
+import org.example.GameContent.Coordinates;
+import org.example.GameContent.Infantry;
+import org.example.GameContent.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameLogic {
-    private List<Human> humans;
-    private List<Alien> aliens;
+    private List<Unit> units;
 
     public GameLogic() {
-        aliens = new ArrayList<>();
-        humans = new ArrayList<>();
-        aliens.add(new Alien(20,5,120,100));
-        humans.add(new Human(20,5,120,200));
+        units = new ArrayList<>();
+        Coordinates position = new Coordinates(200,200);
+        Coordinates secondposition = new Coordinates(300,200);
+        units.add(new Infantry(position,"Infantry",20,20,2,1));
+        units.add(new Infantry(secondposition,"Infantry",20,20,2,1));
+
     }
 
-    public List<Human> getHumans() {
-        return humans;
+    public List<Unit> getUnits() {
+        return units;
     }
 
-    public List<Alien> getAliens() {
-        return aliens;
-    }
 }

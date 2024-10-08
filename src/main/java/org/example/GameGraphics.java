@@ -1,8 +1,7 @@
 package org.example;
 
-import org.example.GameContent.Alien;
-import org.example.GameContent.Character;
-import org.example.GameContent.Human;
+import org.example.GameContent.Unit;
+import org.example.GameContent.Infantry;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,21 +36,23 @@ public class GameGraphics extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            List<Alien> aliens = logic.getAliens();
-            List<Human> humans = logic.getHumans();
+            List<Unit> units = logic.getUnits();
 
-            g.setColor(Color.GREEN);
-            for (Alien alien : aliens) {
-                drawCharacter(g, alien);
-            }
-            g.setColor(Color.CYAN);
-            for (Human human : humans) {
-                drawCharacter(g, human);
+            for (Unit unit: units) {
+                drawCharacter(g, unit);
             }
         }
-        private void drawCharacter(Graphics g, Character character) {
+        private void drawCharacter(Graphics g, Unit character) {
             int x = character.getPosition().x;
             int y = character.getPosition().y;
+
+            if (character.isSelected()) {
+                System.out.println("vybran");
+                g.setColor(Color.green);
+            } else {
+                g.setColor(Color.blue);
+            }
+
 
             g.fillOval(x-10,y-10,50,50);
         }

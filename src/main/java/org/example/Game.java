@@ -1,17 +1,19 @@
 package org.example;
 
+import org.example.GameContent.Coordinates;
 import org.example.GameContent.Unit;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.List;
+
 
 public class Game {
 
+    private Coordinates selectionStart;
+    private Coordinates selectionEnd;
+    private boolean dragging = false;
 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -22,7 +24,7 @@ public class Game {
     }
     public Game() {
         GameLogic logic = new GameLogic();
-        GameGraphics graphic = new GameGraphics(logic);
+        GameGraphics graphic = new GameGraphics(logic,this);
         graphic.render(logic);
 
         graphic.addMouseListener(new MouseListener() {
@@ -30,6 +32,7 @@ public class Game {
             public void mouseClicked(MouseEvent e) {
                 List<Unit> units = logic.getUnits();
                 boolean clickedOnUnit = false;
+
 
                 for (Unit unit: units) {
                     int x = unit.getPosition().x;
@@ -49,16 +52,20 @@ public class Game {
                             unit.setSelected(false);
                         }
                     }
+
+
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-
+                selectionStart = new Coordinates(e.getX(),e.getY());
+                selectionEnd = selectionStart;
+                dragging = true;
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                dragging = false;
             }
 
             @Override
@@ -71,6 +78,17 @@ public class Game {
 
             }
         });
+        graphic.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                selectionEnd = new Coordinates(e.getX(),e.getY());
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+            }
+        });
 
         Timer timer = new Timer(100, new ActionListener() {
             @Override
@@ -79,5 +97,16 @@ public class Game {
             }
         });
         timer.start();
+    }
+    public boolean isDragging() {
+        return dragging;
+    }
+
+    public Coordinates getSelectionStart() {
+        return selectionStart;
+    }
+
+    public Coordinates getSelectionEnd() {
+        return selectionEnd;
     }
 }

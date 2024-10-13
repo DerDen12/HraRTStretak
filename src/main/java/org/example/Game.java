@@ -4,7 +4,7 @@ import org.example.GameContent.Coordinates;
 import org.example.GameContent.Unit;
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.awt.event.*;
 import java.util.List;
 
@@ -82,6 +82,24 @@ public class Game {
             @Override
             public void mouseDragged(MouseEvent e) {
                 selectionEnd = new Coordinates(e.getX(),e.getY());
+                List<Unit> units = logic.getUnits();
+
+                int minX = Math.min(selectionStart.x, selectionEnd.x);
+                int maxX = Math.max(selectionStart.x, selectionEnd.x);
+                int minY = Math.min(selectionStart.y, selectionEnd.y);
+                int maxY = Math.max(selectionStart.y, selectionEnd.y);
+
+                for (Unit unit: units) {
+                    int unitX = unit.getPosition().x;
+                    int unitY = unit.getPosition().y;
+
+                    if (unitX >= minX && unitX <= maxX && unitY >= minY && unitY <= maxY) {
+                        unit.setSelected(true);
+                    } else {
+                        unit.setSelected(false);
+                    }
+
+                }
             }
 
             @Override
@@ -90,7 +108,7 @@ public class Game {
             }
         });
 
-        Timer timer = new Timer(100, new ActionListener() {
+        Timer timer = new Timer(80, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 graphic.render(logic);

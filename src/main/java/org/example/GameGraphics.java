@@ -50,12 +50,12 @@ public class GameGraphics extends JFrame {
             }
         }
         private void drawSelectionBox(Graphics g, Coordinates selectionStart, Coordinates selectionEnd) {
-            g.setColor(Color.BLUE);
-            int x = Math.min(selectionStart.x, selectionEnd.x);
-            int y = Math.min(selectionStart.y, selectionEnd.y);
-            int width = Math.abs(selectionEnd.x - selectionStart.x);
-            int height = Math.abs(selectionEnd.y - selectionStart.y);
-            g.drawRect(x,y,width,height);
+            g.setColor(Color.lightGray);
+            int boxX = Math.min(selectionStart.x, selectionEnd.x);
+            int boxY = Math.min(selectionStart.y, selectionEnd.y);
+            int boxWidth = Math.abs(selectionEnd.x - selectionStart.x);
+            int boxHeight = Math.abs(selectionEnd.y - selectionStart.y);
+            g.drawRect(boxX,boxY,boxWidth,boxHeight);
 
         }
         private void drawCharacter(Graphics g, Unit character) {

@@ -38,7 +38,7 @@ public class Game {
                     int x = unit.getPosition().x;
                     int y = unit.getPosition().y;
 
-                    if (e.getX() >= x - 10 && e.getX() <= x + 40 && e.getY() >= y - 10 && e.getY() <= y + 40) {
+                    if (e.getX() >= x - 10 && e.getX() <= x + 40 && e.getY() >= y - 10 && e.getY() <= y + 40 && SwingUtilities.isLeftMouseButton(e)) {
                        unit.setSelected(true);
                        clickedOnUnit = true;
                     } else {
@@ -58,9 +58,11 @@ public class Game {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                if (SwingUtilities.isLeftMouseButton(e)) {
                 selectionStart = new Coordinates(e.getX(),e.getY());
                 selectionEnd = selectionStart;
                 dragging = true;
+                }
             }
 
             @Override
@@ -93,7 +95,7 @@ public class Game {
                     int unitX = unit.getPosition().x;
                     int unitY = unit.getPosition().y;
 
-                    if (unitX >= minX && unitX <= maxX && unitY >= minY && unitY <= maxY) {
+                    if (unitX >= minX && unitX <= maxX && unitY >= minY && unitY <= maxY && SwingUtilities.isLeftMouseButton(e)) {
                         unit.setSelected(true);
                     } else {
                         unit.setSelected(false);

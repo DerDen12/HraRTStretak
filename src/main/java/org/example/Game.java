@@ -13,6 +13,8 @@ public class Game {
 
     private Coordinates selectionStart;
     private Coordinates selectionEnd;
+
+    private Coordinates moveTo;
     private boolean dragging = false;
 
     public static void main(String[] args) {
@@ -45,11 +47,19 @@ public class Game {
                         unit.setSelected(false);
                     }
                 }
-
-
                     if (!clickedOnUnit) {
                         for (Unit unit: units) {
                             unit.setSelected(false);
+                        }
+                    }
+                    for (Unit unit: units) {
+                        moveTo = new Coordinates(e.getX(),e.getY());
+
+                        if (unit.isSelected() && SwingUtilities.isRightMouseButton(e)) {
+
+                            System.out.println("funguje");
+                            return;
+
                         }
                     }
 

@@ -15,6 +15,39 @@ public class Unit extends GameObject {
         this.team = team;
         this.selected = false;
     }
+
+    public void move(int steps,Direction direction) {
+        switch (direction) {
+            case LEFT -> {
+                this.getPosition().x -= steps;
+            }
+            case RIGHT -> {
+                this.getPosition().x += steps;
+            }
+            case UP -> {
+                this.getPosition().y -= steps;
+            }
+            case DOWN -> {
+                this.getPosition().y += steps;
+            }
+            case UP_LEFT -> {
+                this.getPosition().x -= steps;
+                this.getPosition().y -= steps;
+            }
+            case UP_RIGHT -> {
+                this.getPosition().x += steps;
+                this.getPosition().y -= steps;
+            }
+            case DOWN_LEFT -> {
+                this.getPosition().x -= steps;
+                this.getPosition().y += steps;
+            }
+            case DOWN_RIGHT -> {
+                this.getPosition().x += steps;
+                this.getPosition().y += steps;
+            }
+        }
+    }
     public boolean isSelected() {
         return selected;
     }

@@ -17,6 +17,7 @@ public class Unit extends GameObject {
     }
 
     public void move(int steps,Direction direction) {
+
         switch (direction) {
             case LEFT -> {
                 this.getPosition().x -= steps;

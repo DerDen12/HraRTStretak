@@ -13,8 +13,6 @@ public class Game {
 
     private Coordinates selectionStart;
     private Coordinates selectionEnd;
-
-    private Coordinates moveTo;
     private boolean dragging = false;
 
     public static void main(String[] args) {
@@ -35,6 +33,11 @@ public class Game {
                 List<Unit> units = logic.getUnits();
                 boolean clickedOnUnit = false;
 
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    for (Unit unit: units) {
+                        unit.setSelected(false);
+                    }
+                }
 
                 for (Unit unit: units) {
                     int x = unit.getPosition().x;
@@ -43,27 +46,21 @@ public class Game {
                     if (e.getX() >= x - 10 && e.getX() <= x + 40 && e.getY() >= y - 10 && e.getY() <= y + 40 && SwingUtilities.isLeftMouseButton(e)) {
                        unit.setSelected(true);
                        clickedOnUnit = true;
-                    } else {
-                        unit.setSelected(false);
                     }
                 }
-                    if (!clickedOnUnit) {
-                        for (Unit unit: units) {
-                            unit.setSelected(false);
-                        }
-                    }
+                if (!clickedOnUnit) {
+
+                }
+
+                if(SwingUtilities.isRightMouseButton(e)) {
                     for (Unit unit: units) {
-                        moveTo = new Coordinates(e.getX(),e.getY());
-
-                        if (unit.isSelected() && SwingUtilities.isRightMouseButton(e)) {
-
-                            System.out.println("funguje");
+                        if (unit.isSelected()) {
+                            Coordinates moveToCoordinates = new Coordinates(e.getX(),e.getY());
+                            logic.setMoveTo(moveToCoordinates);
                             return;
-
                         }
                     }
-
-
+                }
             }
 
             @Override
@@ -124,9 +121,11 @@ public class Game {
             @Override
             public void actionPerformed(ActionEvent e) {
                 graphic.render(logic);
+                logic.update();
             }
         });
         timer.start();
+
     }
     public boolean isDragging() {
         return dragging;
